@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import '../../model/ToDo';
+import '../../model/NewToDo'
 import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {ToDoService} from "../../service/to-do.service";
@@ -18,9 +19,9 @@ import {ToDoService} from "../../service/to-do.service";
 export class TodoComponent implements OnInit{
   toDoList: ToDo[] = [];
   toDoText:string = "todoLine";
-  toDoLine: ToDo = {id:0, taskText: "", taskStatus: false};
+  newToDo:NewToDo  = {taskText: "", taskStatus: false};
   showTasks!: boolean;
-  todoId: number =2;
+  taskToUpdate!: ToDo;
 
 
   constructor(private toDoService:ToDoService) {
@@ -34,20 +35,19 @@ export class TodoComponent implements OnInit{
   onSave(){
     console.log(this.toDoText);
 
-    this.toDoLine.id = 0;
-    this.toDoLine.taskText = this.toDoText;
-    this.toDoLine.taskStatus = false;
+    this.newToDo.taskText = this.toDoText;
+    this.newToDo.taskStatus = false;
 
-    this.toDoService.addToDo(this.toDoLine).subscribe({
+    this.toDoService.addToDo(this.newToDo).subscribe({
       next: value => this.toDoList = value
     });
   }
 
   onFinished(id: number){
-    this.toDoLine = this.toDoList.find(value => value.id === id)!;
-    this.toDoLine.taskStatus = true;
+    this.taskToUpdate = this.toDoList.find(value => value.id === id)!;
+    this.taskToUpdate.taskStatus = true;
 
-    this.toDoService.updateToDo(id, this.toDoLine).subscribe();
+    this.toDoService.updateToDo(id, this.taskToUpdate).subscribe();
   }
 
   onShowTasks(){
