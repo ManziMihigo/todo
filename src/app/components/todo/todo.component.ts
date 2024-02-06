@@ -39,7 +39,11 @@ export class TodoComponent implements OnInit{
     this.newToDo.taskStatus = false;
 
     this.toDoService.addToDo(this.newToDo).subscribe({
-      next: value => this.toDoList = value
+      next: value => this.refresh(),
+      error: err => {
+        console.log(err);
+        this.refresh();
+      }
     });
   }
 
