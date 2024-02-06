@@ -1,4 +1,4 @@
 
 export const environment = {
-  apiRoot: 'http://127.0.0.1:8000'
+  apiRoot: 'https://django-todo-five.vercel.app/'
 };
