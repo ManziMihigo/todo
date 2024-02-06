@@ -11,7 +11,6 @@ export class ToDoService {
   constructor(private http: HttpClient) { }
 
   addToDo(task:NewToDo){
-    console.log(task)
     return this.http.post<ToDo[]>(`${environment.apiRoot}` + "/api/tasks/", task);
   }
 

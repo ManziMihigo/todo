@@ -33,13 +33,15 @@ export class TodoComponent implements OnInit{
   }
 
   onSave(){
-    console.log(this.toDoText);
 
     this.newToDo.taskText = this.toDoText;
     this.newToDo.taskStatus = false;
 
     this.toDoService.addToDo(this.newToDo).subscribe({
-      next: value => this.refresh(),
+      next: value => {
+        this.toDoText = "";
+        this.refresh();
+      },
       error: err => {
         console.log(err);
         this.refresh();
